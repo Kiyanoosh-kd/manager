@@ -25,24 +25,14 @@ public class EquipmentReading
         decimal powerValue,
         string powerUnit)
     {
+
         if (equipmentId == Guid.Empty)
-            throw new ArgumentException(
-                "Equipment ID cannot be empty.",
-                nameof(equipmentId));
+            throw new ArgumentException("Equipment ID cannot be empty.", nameof(equipmentId));
 
-        if (string.IsNullOrWhiteSpace(status))
-            throw new ArgumentException(
-                "Status cannot be empty.",
-                nameof(status));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(status, nameof(Status));
+        ArgumentOutOfRangeException.ThrowIfNegative(powerValue);
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(powerUnit);
 
-        if (powerValue < 0)
-            throw new ArgumentOutOfRangeException(
-                nameof(powerValue));
-
-        if (string.IsNullOrWhiteSpace(powerUnit))
-            throw new ArgumentException(
-                "Power unit cannot be empty.",
-                nameof(powerUnit));
 
         Id = Guid.NewGuid();
         EquipmentId = equipmentId;
