@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace UniqueApi.Entities;
@@ -20,11 +21,7 @@ public class Equipment
         string name,
         EquipmentType equipmentType)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(
-                "Equipment name cannot be empty.",
-                nameof(name));
-
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(name, nameof(Name));
         ArgumentNullException.ThrowIfNull(equipmentType);
 
         Id = Guid.NewGuid();

@@ -15,10 +15,7 @@ public class EquipmentType
 
     public EquipmentType(string name, string? description = null)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(
-                "Equipment type name cannot be empty.",
-                nameof(name));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(name, nameof(Name));
 
         Id = Guid.NewGuid();
         Name = name.Trim();
