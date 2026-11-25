@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Entities.common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UniqueApi.Entities;
+namespace Entities;
 
-public class EquipmentType
+public class EquipmentType : BaseEntity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; private set; }
 
     public string? Description { get; private set; }
 
+    public ICollection<Equipment> Equipments { get; private set; } = new List<Equipment>();
 
     public EquipmentType(string name, string? description = null)
     {

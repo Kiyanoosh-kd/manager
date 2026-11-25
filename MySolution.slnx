@@ -1,2 +1,6 @@
 <Solution>
+  <Project Path="src/API/API.csproj" />
+  <Project Path="src/Data/Data.csproj" />
+  <Project Path="src/Entities/Entities.csproj" />
+  <Project Path="src/Services/Services.csproj" />
 </Solution>

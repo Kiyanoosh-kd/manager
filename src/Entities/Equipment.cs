@@ -1,22 +1,27 @@
-﻿using System;
+﻿using Entities.common;
+using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Text;
 
-namespace UniqueApi.Entities;
+namespace Entities;
 
-public class Equipment
+public class Equipment : BaseEntity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; private set; }
 
     public Guid EquipmentTypeId { get; private set; }
 
     public EquipmentType EquipmentType { get; private set; }
 
+    public ICollection<EquipmentReading> Readings { get; private set; } = new List<EquipmentReading>();
+
     public bool IsEnabled { get; private set; }
 
+    private Equipment()
+    {
+
+    }
     public Equipment(
         string name,
         EquipmentType equipmentType)
@@ -30,6 +35,8 @@ public class Equipment
         EquipmentType = equipmentType;
         IsEnabled = true;
     }
+
+        
 
     public void Enable()
     {
