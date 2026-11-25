@@ -1,44 +1,51 @@
-﻿using System;
+﻿using Entities.common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UniqueApi.Entities;
+namespace Entities;
 
-public class EquipmentReading
+public class EquipmentReading : BaseEntity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public Guid EquipmentId { get; private set; }
 
-    public string Status { get; private set; }
+    public EquipmentStatusType Status { get; private set; }
 
     public decimal PowerValue { get; private set; }
 
-    public string PowerUnit { get; private set; }
+    public PowerUnitType PowerUnit { get; private set; }
 
     public DateTime ObservedAtUtc { get; private set; }
-
+    public Equipment? Equipment { get; private set; }
 
     public EquipmentReading(
         Guid equipmentId,
-        string status,
+        EquipmentStatusType status,
         decimal powerValue,
-        string powerUnit)
+        PowerUnitType powerUnit)
     {
 
         if (equipmentId == Guid.Empty)
             throw new ArgumentException("Equipment ID cannot be empty.", nameof(equipmentId));
 
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(status, nameof(Status));
+        if (!Enum.IsDefined(status))
+            throw new ArgumentException(
+                $"Invalid equipment status: {status}",
+                nameof(status));
+
         ArgumentOutOfRangeException.ThrowIfNegative(powerValue);
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(powerUnit);
+
+        if (!Enum.IsDefined(powerUnit))
+            throw new ArgumentException(
+                $"Invalid power unit: {powerUnit}",
+                nameof(powerUnit));
 
 
         Id = Guid.NewGuid();
         EquipmentId = equipmentId;
-        Status = status.Trim();
+        Status = status;
         PowerValue = powerValue;
-        PowerUnit = powerUnit.Trim();
+        PowerUnit = powerUnit;
         ObservedAtUtc = DateTime.UtcNow;
     }
 }
